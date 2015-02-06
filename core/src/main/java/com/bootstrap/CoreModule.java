@@ -2,9 +2,11 @@ package com.bootstrap;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
@@ -15,6 +17,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import de.greenrobot.event.EventBus;
 
 @Module(library = true,
   injects = {
@@ -48,8 +51,20 @@ public final class CoreModule {
     return (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
   }
 
+  @Provides @Singleton public SharedPreferences provideSharedPreferences(final Context context) {
+    return PreferenceManager.getDefaultSharedPreferences(context);
+  }
+
+  @Provides @Singleton public SharedPreferences.Editor provideSharedPreferencesEditor(final SharedPreferences preferences) {
+    return preferences.edit();
+  }
+
   @Provides @Singleton public Handler provideHandler() {
     return new Handler();
+  }
+
+  @Provides @Singleton public EventBus provideEventBus() {
+    return EventBus.getDefault();
   }
 
   @Provides @Singleton public Typeface provideRegularFont() {

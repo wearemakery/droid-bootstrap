@@ -63,6 +63,7 @@ public final class FloatingButton extends View {
   }
 
   private void init() {
+    setLayerType(LAYER_TYPE_HARDWARE, null);
     buttonPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     shadow = BitmapFactory.decodeResource(getResources(), R.drawable.float_shadow);
     button = BitmapFactory.decodeResource(getResources(), R.drawable.float_circle);
