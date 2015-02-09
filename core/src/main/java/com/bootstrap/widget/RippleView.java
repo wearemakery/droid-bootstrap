@@ -149,7 +149,7 @@ public class RippleView extends View {
 
     animator.addListener(new AbstractAnimatorListener() {
       @Override public void onAnimationStart(final Animator animation) {
-        setLayerType(AndroidUtils.gtIceCream() ? LAYER_TYPE_HARDWARE : LAYER_TYPE_SOFTWARE, null);
+        setLayerType(AndroidUtils.gtJellyBean() ? LAYER_TYPE_HARDWARE : LAYER_TYPE_SOFTWARE, null);
         if (isAttachedToWindow) {
           buildLayer();
         } else {

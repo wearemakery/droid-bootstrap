@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
@@ -49,6 +50,10 @@ public final class CoreModule {
 
   @Provides @Singleton public WindowManager provideWindowManager(final Context context) {
     return (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+  }
+
+  @Provides @Singleton public NotificationManagerCompat provideNotificationManager(final Context context) {
+    return NotificationManagerCompat.from(context);
   }
 
   @Provides @Singleton public SharedPreferences provideSharedPreferences(final Context context) {

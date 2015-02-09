@@ -16,11 +16,19 @@ public final class AndroidUtils {
   }
 
   public static boolean gtIceCream() {
-    return Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
   }
 
   public static boolean gtJellyBean() {
-    return Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN;
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+  }
+
+  public static boolean gtKitKat() {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+  }
+
+  public static boolean gtLollipop() {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
   }
 
   private static int statusBarHeight(final Context context) {
@@ -34,6 +42,6 @@ public final class AndroidUtils {
   }
 
   public static int statusBarCorrection(final Context context) {
-    return (gtJellyBean()) ? statusBarHeight(context) : 0;
+    return (gtKitKat()) ? statusBarHeight(context) : 0;
   }
 }
