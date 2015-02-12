@@ -73,11 +73,10 @@ public class RippleView extends View {
   }
 
   public RippleView hotSpot(final float centerX, final float centerY, final float maxRadius) {
-    final Rect rect = new Rect();
-    getGlobalVisibleRect(rect);
-    this.centerX = centerX - rect.left;
-    this.centerY = centerY - rect.top;
+    this.centerX = centerX;
+    this.centerY = centerY;
     this.maxRadius = maxRadius;
+    this.radius = 0.0f;
     return this;
   }
 
@@ -181,8 +180,10 @@ public class RippleView extends View {
   }
 
   @Override protected void onDraw(final Canvas canvas) {
-    canvas.clipRect(rippleRect);
-    canvas.drawCircle(centerX, centerY, radius, paint);
+    if (radius > 0.0f) {
+      canvas.clipRect(rippleRect);
+      canvas.drawCircle(centerX, centerY, radius, paint);
+    }
   }
 
   @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {

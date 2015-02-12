@@ -40,4 +40,12 @@ public final class TypefaceManager {
     }
     textView.setTypeface(font);
   }
+
+  public Typeface getRegular() {
+    return fontRegular;
+  }
+
+  public Typeface getMedium() {
+    return fontMedium;
+  }
 }

@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.widget.Font;
+import android.widget.MaterialButton;
 import android.widget.TypefaceTextView;
 
 import javax.inject.Singleton;
@@ -22,7 +23,8 @@ import de.greenrobot.event.EventBus;
 
 @Module(library = true,
   injects = {
-    TypefaceTextView.class
+    TypefaceTextView.class,
+    MaterialButton.class,
   }
 )
 public final class CoreModule {
