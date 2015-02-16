@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
+import android.provider.Settings;
+import android.text.TextUtils;
 
 public final class AndroidUtils {
   private AndroidUtils() {
@@ -43,5 +45,14 @@ public final class AndroidUtils {
 
   public static int statusBarCorrection(final Context context) {
     return (gtKitKat()) ? statusBarHeight(context) : 0;
+  }
+
+  public static boolean isNotificationAccessGranted(final Context context) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+      return false;
+    } else {
+      final String enabledNotificationListeners = Settings.Secure.getString(context.getContentResolver(), "enabled_notification_listeners");
+      return (!TextUtils.isEmpty(enabledNotificationListeners) && enabledNotificationListeners.contains(context.getPackageName()));
+    }
   }
 }
