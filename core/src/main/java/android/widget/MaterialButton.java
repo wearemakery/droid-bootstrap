@@ -22,7 +22,9 @@ public class MaterialButton extends Button {
   @Inject Resources resources;
 
   private boolean pressed;
-  private int minWidth, height, touchTarget, internalPadding, externalPadding;
+  private int height;
+  private int touchTarget;
+  private int externalPadding;
   private float radius;
   private RectF bgRect;
   private Paint bgPaint;
@@ -54,16 +56,19 @@ public class MaterialButton extends Button {
     if (!isInEditMode()) {
       BaseApplication.from(context).inject(this);
       setTypeface(typefaceManager.getMedium());
-      minWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64.0f, displayMetrics);
+
+      final int minWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64.0f, displayMetrics);
+      final int internalPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8.0f, displayMetrics);
+
       height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36.0f, displayMetrics);
       touchTarget = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48.0f, displayMetrics);
-      internalPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8.0f, displayMetrics);
       externalPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4.0f, displayMetrics);
       radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3.0f, displayMetrics);
+
+      setMinWidth(minWidth);
+      setPadding(internalPadding, 0, internalPadding, 0);
+      setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.abc_text_size_button_material));
     }
-    setMinWidth(minWidth);
-    setPadding(internalPadding, 0, internalPadding, 0);
-    setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.abc_text_size_button_material));
     setTextColor(Color.BLACK);
     setAllCaps(true);
     setBackgroundColor(Color.TRANSPARENT);

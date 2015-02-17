@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -21,21 +20,6 @@ public final class FloatingButton extends View {
   private Paint buttonPaint;
   private LightingColorFilter filter1;
   private LightingColorFilter filter2;
-  private GestureDetector gestureDetector;
-  private OnClickListener onClickListener;
-
-  private final GestureDetector.SimpleOnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
-    @Override public boolean onSingleTapConfirmed(final MotionEvent e) {
-      if (onClickListener != null) {
-        onClickListener.onClick(FloatingButton.this);
-      }
-      return true;
-    }
-
-    @Override public boolean onDown(final MotionEvent e) {
-      return true;
-    }
-  };
 
   public FloatingButton(final Context context) {
     super(context);
@@ -63,19 +47,13 @@ public final class FloatingButton extends View {
   }
 
   private void init() {
-    setLayerType(LAYER_TYPE_HARDWARE, null);
     buttonPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     shadow = BitmapFactory.decodeResource(getResources(), R.drawable.float_shadow);
     button = BitmapFactory.decodeResource(getResources(), R.drawable.float_circle);
-    gestureDetector = new GestureDetector(getContext(), gestureListener);
   }
 
   public int getSize() {
     return button.getWidth();
-  }
-
-  @Override public void setOnClickListener(final OnClickListener listener) {
-    this.onClickListener = listener;
   }
 
   @Override protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
@@ -99,14 +77,12 @@ public final class FloatingButton extends View {
         buttonPaint.setColorFilter(filter2);
         invalidate();
         break;
-      case MotionEvent.ACTION_MOVE:
-        break;
       case MotionEvent.ACTION_UP:
       case MotionEvent.ACTION_CANCEL:
         buttonPaint.setColorFilter(filter1);
         invalidate();
         break;
     }
-    return gestureDetector.onTouchEvent(event);
+    return super.onTouchEvent(event);
   }
 }

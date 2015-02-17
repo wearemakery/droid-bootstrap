@@ -8,11 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import com.bootstrap.animation.ArgbEvaluator;
+import com.bootstrap.utils.ColorUtils;
 
 public final class ColorFadeDrawable extends Drawable {
-  private final ArgbEvaluator evaluator = ArgbEvaluator.getInstance();
-
   private final int colorFrom;
   private final int colorTo;
   private final Paint paint;
@@ -47,7 +45,7 @@ public final class ColorFadeDrawable extends Drawable {
     animator.setInterpolator(exit ? new DecelerateInterpolator() : new AccelerateInterpolator());
     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
       @Override public void onAnimationUpdate(final ValueAnimator animation) {
-        paint.setColor(evaluator.evaluate(animation.getAnimatedFraction(),
+        paint.setColor(ColorUtils.crossFade(animation.getAnimatedFraction(),
           exit ? colorFrom : colorTo, exit ? colorTo : colorFrom));
         invalidateSelf();
       }

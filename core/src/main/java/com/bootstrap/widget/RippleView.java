@@ -13,24 +13,22 @@ import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.bootstrap.R;
 import com.bootstrap.animation.AbstractAnimatorListener;
-import com.bootstrap.utils.AndroidUtils;
 
 public class RippleView extends View {
   private float centerX, centerY, maxRadius, radius;
   private float animValue;
   private long startDelay, duration;
   private int repeatCount, repeatMode;
+  private int currentLayerType;
   private boolean withAlpha, reverseAlpha;
   private boolean revert;
-  private boolean isAttachedToWindow;
   private Paint paint;
-  private Rect visibleRect;
+  private Rect boundsRect;
   private Rect rippleRect;
   private Runnable endAction;
 
@@ -63,7 +61,7 @@ public class RippleView extends View {
     }
     paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     paint.setColor(color);
-    visibleRect = new Rect();
+    boundsRect = new Rect();
     rippleRect = new Rect();
   }
 
@@ -130,17 +128,17 @@ public class RippleView extends View {
           paint.setAlpha((int) (255 * (reverseAlpha ? 1.0f - animValue : animValue)));
         }
         rippleRect.set((int) (centerX - radius), (int) (centerY - radius), (int) (centerX + radius), (int) (centerY + radius));
-        if (rippleRect.left < visibleRect.left) {
-          rippleRect.left = visibleRect.left;
+        if (rippleRect.left < boundsRect.left) {
+          rippleRect.left = boundsRect.left;
         }
-        if (rippleRect.top < visibleRect.top) {
-          rippleRect.top = visibleRect.top;
+        if (rippleRect.top < boundsRect.top) {
+          rippleRect.top = boundsRect.top;
         }
-        if (rippleRect.right > visibleRect.right) {
-          rippleRect.right = visibleRect.right;
+        if (rippleRect.right > boundsRect.right) {
+          rippleRect.right = boundsRect.right;
         }
-        if (rippleRect.bottom > visibleRect.bottom) {
-          rippleRect.bottom = visibleRect.bottom;
+        if (rippleRect.bottom > boundsRect.bottom) {
+          rippleRect.bottom = boundsRect.bottom;
         }
         ViewCompat.postInvalidateOnAnimation(RippleView.this);
       }
@@ -148,22 +146,12 @@ public class RippleView extends View {
 
     animator.addListener(new AbstractAnimatorListener() {
       @Override public void onAnimationStart(final Animator animation) {
-        setLayerType(AndroidUtils.gtJellyBean() ? LAYER_TYPE_HARDWARE : LAYER_TYPE_SOFTWARE, null);
-        if (isAttachedToWindow) {
-          buildLayer();
-        } else {
-          getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override public boolean onPreDraw() {
-              getViewTreeObserver().removeOnPreDrawListener(this);
-              buildLayer();
-              return false;
-            }
-          });
-        }
+        currentLayerType = getLayerType();
+        setLayerType(LAYER_TYPE_HARDWARE, null);
       }
 
       @Override public void onAnimationEnd(final Animator animation) {
-        setLayerType(LAYER_TYPE_NONE, null);
+        setLayerType(currentLayerType, null);
         if (endAction != null) {
           endAction.run();
           endAction = null;
@@ -188,11 +176,6 @@ public class RippleView extends View {
 
   @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
     super.onSizeChanged(w, h, oldw, oldh);
-    getLocalVisibleRect(visibleRect);
-  }
-
-  @Override protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    isAttachedToWindow = true;
+    boundsRect.set(0, 0, w, h);
   }
 }
