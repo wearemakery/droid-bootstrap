@@ -10,6 +10,7 @@ import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 
 import com.bootstrap.BaseApplication;
 
@@ -47,6 +48,7 @@ public final class FlatButton extends TextView {
       setTypeface(typefaceManager.getMedium());
       setTextSize(TypedValue.COMPLEX_UNIT_SP, FONT_SIZE);
       setAllCaps(true);
+      setGravity(Gravity.CENTER);
     }
   }
 
