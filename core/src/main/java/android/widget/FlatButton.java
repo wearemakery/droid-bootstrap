@@ -1,18 +1,12 @@
 package android.widget;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.RippleDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.StateListDrawable;
-import android.graphics.drawable.shapes.RectShape;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 
 import com.bootstrap.BaseApplication;
+import com.bootstrap.utils.UIUtils;
 
 import javax.inject.Inject;
 
@@ -52,24 +46,8 @@ public final class FlatButton extends TextView {
     }
   }
 
-  private void addRippleEffect(final int inactive, final int pressed) {
-    final ColorStateList colorStateList = new ColorStateList(new int[][]{new int[]{android.R.attr.state_pressed},}, new int[]{pressed});
-    final RippleDrawable rippleDrawable = new RippleDrawable(colorStateList, new ColorDrawable(inactive), new ShapeDrawable(new RectShape()));
-    setBackground(rippleDrawable);
-  }
-
   public void setColors(final int textInactive, final int textPressed, final int backgroundInactive, final int backgroundPressed) {
-    final ColorStateList colorStateList = new ColorStateList(new int[][]{new int[]{android.R.attr.state_pressed}, new int[]{}},
-      new int[]{textPressed, textInactive});
-    setTextColor(colorStateList);
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      addRippleEffect(backgroundInactive, backgroundPressed);
-    } else {
-      final StateListDrawable backgroundDrawable = new StateListDrawable();
-      backgroundDrawable.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(backgroundPressed));
-      backgroundDrawable.addState(new int[]{}, new ColorDrawable(backgroundInactive));
-      setBackground(backgroundDrawable);
-    }
+    setTextColor(UIUtils.getTextColor(textInactive, textPressed));
+    setBackground(UIUtils.getRippleBackground(backgroundInactive, backgroundPressed));
   }
 }
