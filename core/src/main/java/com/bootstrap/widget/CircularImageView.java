@@ -40,6 +40,11 @@ public class CircularImageView extends View implements Target {
     paint.setColor(color);
   }
 
+  public void reset() {
+    paint.setShader(null);
+    invalidate();
+  }
+
   private void init() {
     rect = new RectF();
     paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -65,7 +70,6 @@ public class CircularImageView extends View implements Target {
   }
 
   @Override public void onPrepareLoad(final Drawable placeHolderDrawable) {
-    paint.setShader(null);
-    invalidate();
+    reset();
   }
 }
