@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import com.bootstrap.BaseApplication;
 
-public final class TypefaceEditText extends EditText {
+public class TypefaceEditText extends EditText {
   @Inject TypefaceManager typefaceManager;
 
   public TypefaceEditText(final Context context) {
