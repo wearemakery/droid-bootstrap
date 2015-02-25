@@ -11,5 +11,9 @@ public final class Intents {
       .putExtra(ContactsContract.Intents.EXTRA_FORCE_CREATE, true)
       .putExtra("finishActivityOnSaveCompleted", true);
   }
-  
+
+  public static Intent sendMessage(final String data) {
+    return new Intent(Intent.ACTION_SENDTO, Uri.fromParts("sms", data, null))
+      .putExtra("finishActivityOnSaveCompleted", true);
+  }
 }
