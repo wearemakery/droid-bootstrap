@@ -1,8 +1,14 @@
 package com.bootstrap.utils;
 
 import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 
 public final class ColorUtils {
+  private final static float R_LUM = 0.213f; // 0.3086f
+  private final static float G_LUM = 0.715f; // 0.6094f
+  private final static float B_LUM = 0.072f; // 0.0820f
+
   private ColorUtils() {
   }
 
@@ -130,5 +136,209 @@ public final class ColorUtils {
     b = Math.max(0, Math.min(255, b));
 
     return Color.rgb(r, g, b);
+  }
+
+  public static ColorMatrixColorFilter modifySaturation(final float amount) {
+    final ColorMatrix colorMatrix = new ColorMatrix();
+    colorMatrix.setSaturation(amount);
+    return new ColorMatrixColorFilter(colorMatrix);
+  }
+
+  public static ColorMatrixColorFilter tint(final float r, final float g, final float b) {
+    final ColorMatrix colorMatrix = new ColorMatrix();
+    final ColorMatrix colorScale = new ColorMatrix();
+    colorScale.setScale(r, g, b, 1.0f);
+    colorMatrix.postConcat(colorScale);
+    return new ColorMatrixColorFilter(colorMatrix);
+  }
+
+  public static void alpha(final float v, final ColorMatrix matrix) {
+    if (v < 0.0f || v > 1.f) {
+      throw new RuntimeException("Alpha has to be in range [0, 1.0]");
+    }
+    final float[] array = matrix.getArray();
+    array[18] = v;
+  }
+
+  public static ColorMatrix brightness(float v) {
+    if (v < -1.f || v > 1.f) {
+      throw new RuntimeException("Brightness has to be in range [-1.0, 1.0]");
+    }
+    final boolean negative = v < 0.f;
+    v = Math.abs(v);
+    final float n = v * v * v * 9.f + 1.f;
+    final float t = negative ? -n * 204.f * v : 0.f;
+    // @formatter:off
+    return new ColorMatrix(new float[]{
+      n, 0.f, 0.f, 0.f, t,
+      0.f, n, 0.f, 0.f, t,
+      0.f, 0.f, n, 0.f, t,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    });
+    // @formatter:on
+  }
+
+  public static ColorMatrix lightness(final float v) {
+    if (v < -1.f || v > 1.f) {
+      throw new RuntimeException("Lightness has to be in range [-1.0, 1.0]");
+    }
+    final float t = v * 255.f;
+    return new ColorMatrix(new float[]{
+      1.f, 0.f, 0.f, 0.f, t,
+      0.f, 1.f, 0.f, 0.f, t,
+      0.f, 0.f, 1.f, 0.f, t,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    });
+  }
+
+  public static ColorMatrix contrast(final float v) {
+    if (v < -1.f || v > 1.f) {
+      throw new RuntimeException("Contrast has to be in range [-1.0, 1.0]");
+    }
+    final float n = v + 1.f;
+    final float t = 128.f * (1.f - n);
+    // @formatter:off
+    final float[] matrix = new float[]{
+      n, 0.f, 0.f, 0.f, t,
+      0.f, n, 0.f, 0.f, t,
+      0.f, 0.f, n, 0.f, t,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    };
+    // @formatter:on
+    return new ColorMatrix(matrix);
+  }
+
+  public static void contrast(final float v, final ColorMatrix matrix) {
+    if (v < -1.f || v > 1.f) {
+      throw new RuntimeException("Contrast has to be in range [-1.0, 1.0]");
+    }
+    final float n = v + 1.f;
+    final float t = 128.f * (1.f - n);
+    final float[] array = matrix.getArray();
+    array[0] = n;
+    array[4] = t;
+    array[6] = n;
+    array[9] = t;
+    array[12] = n;
+    array[14] = t;
+  }
+
+  public static ColorMatrix levels(final int channel, final float v) {
+    if (v < -1.f || v > 1.f) {
+      throw new RuntimeException("Level has to be in range [-1.0, 1.0]");
+    }
+    final float r = (channel == 0 || channel == 3) ? 1.f + v * 1.f : 1.f;
+    final float g = (channel == 1 || channel == 3) ? 1.f + v * 1.f : 1.f;
+    final float b = (channel == 2 || channel == 3) ? 1.f + v * 1.f : 1.f;
+    // @formatter:off
+    final float[] matrix = new float[]{
+      r, 0.f, 0.f, 0.f, 0.f,
+      0.f, g, 0.f, 0.f, 0.f,
+      0.f, 0.f, b, 0.f, 0.f,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    };
+    // @formatter:on
+    return new ColorMatrix(matrix);
+  }
+
+  public static ColorMatrix saturation(final float v) {
+    if (v < -1.f || v > 1.f) {
+      throw new RuntimeException("Saturation has to be in range [-1.0, 1.0]");
+    }
+    final float n = 1.f + (v > 0.f ? 3.f * v : v);
+    final float r = (1.f - n) * R_LUM;
+    final float g = (1.f - n) * G_LUM;
+    final float b = (1.f - n) * B_LUM;
+    // @formatter:off
+    final float[] matrix = new float[]{
+      r + n, g, b, 0.f, 0.f,
+      r, g + n, b, 0.f, 0.f,
+      r, g, b + n, 0.f, 0.f,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    };
+    // @formatter:on
+    return new ColorMatrix(matrix);
+  }
+
+  public static void saturation(final float v, final ColorMatrix matrix) {
+    if (v < -1.f || v > 1.f) {
+      throw new RuntimeException("Saturation has to be in range [-1.0, 1.0]");
+    }
+    final float n = 1.f + (v > 0.f ? 3.f * v : v);
+    final float r = (1.f - n) * R_LUM;
+    final float g = (1.f - n) * G_LUM;
+    final float b = (1.f - n) * B_LUM;
+    final float[] array = matrix.getArray();
+    array[0] = r + n;
+    array[1] = g;
+    array[2] = b;
+    array[5] = r;
+    array[6] = g + n;
+    array[7] = b;
+    array[7] = b;
+    array[10] = r;
+    array[11] = g;
+    array[12] = b + n;
+  }
+
+  public static ColorMatrix colorize(final int color, final int intensity) {
+    final float p = intensity / 100.f;
+    final float up = Math.abs(p);
+
+    float r = Color.red(color) / 255.f;
+    float g = Color.green(color) / 255.f;
+    float b = Color.blue(color) / 255.f;
+    if (p < 0.f) {
+      r = 1.f - r;
+      g = 1.f - g;
+      b = 1.f - b;
+    }
+
+    final float irl = 1.f - (1.f - R_LUM) * up;
+    final float igl = 1.f - (1.f - G_LUM) * up;
+    final float ibl = 1.f - (1.f - B_LUM) * up;
+
+    final float rl = R_LUM * up;
+    final float gl = G_LUM * up;
+    final float bl = B_LUM * up;
+
+    // @formatter:off
+    final float[] matrix = new float[]{
+      irl, gl, bl, 0.f, r * p * 255.f,
+      rl, igl, bl, 0.f, g * p * 255.f,
+      rl, gl, ibl, 0.f, b * p * 255.f,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    };
+    // @formatter:on
+    return new ColorMatrix(matrix);
+  }
+
+  public static ColorMatrix multiply(final int color) {
+    final float r = Color.red(color) / 255.f;
+    final float g = Color.green(color) / 255.f;
+    final float b = Color.blue(color) / 255.f;
+    // @formatter:off
+    return new ColorMatrix(new float[]{
+      r, 0.f, 0.f, 0.f, 0.f,
+      0.f, g, 0.f, 0.f, 0.f,
+      0.f, 0.f, b, 0.f, 0.f,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    });
+    // @formatter:on
+  }
+
+  public static ColorMatrix dim(final float v) {
+    if (v < 0.f || v > 1.f) {
+      throw new RuntimeException("Dim has to be in range [0, 1.0]");
+    }
+    final float n = 1.f - (1.f * v);
+    // @formatter:off
+    return new ColorMatrix(new float[]{
+      n, 0.f, 0.f, 0.f, 0.f,
+      0.f, n, 0.f, 0.f, 0.f,
+      0.f, 0.f, n, 0.f, 0.f,
+      0.f, 0.f, 0.f, 1.f, 0.f
+    });
+    // @formatter:on
   }
 }
