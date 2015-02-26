@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 public final class MaterialImageView extends View implements Target {
+  
   private int currentLayerType;
   private RectF rect;
   private Paint paint;

@@ -67,7 +67,7 @@ public final class ColorUtils {
     float l = (max + min) / 2f;
 
     if (max == min) {
-      // Monochromatic
+      // Monochrome
       h = s = 0f;
     } else {
       if (max == rf) {
