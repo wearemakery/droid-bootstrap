@@ -2,6 +2,7 @@ package android.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -31,25 +32,25 @@ public class MaterialButton extends Button {
 
   public MaterialButton(final Context context) {
     super(context);
-    init(context);
+    init(context, null);
   }
 
   public MaterialButton(final Context context, final AttributeSet attrs) {
     super(context, attrs);
-    init(context);
+    init(context, attrs);
   }
 
   public MaterialButton(final Context context, final AttributeSet attrs, final int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    init(context);
+    init(context, attrs);
   }
 
   public MaterialButton(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
-    init(context);
+    init(context, attrs);
   }
 
-  private void init(final Context context) {
+  private void init(final Context context, final AttributeSet attrs) {
     bgRect = new RectF();
     bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     bgPaint.setColor(0xffcccccc);
@@ -69,7 +70,13 @@ public class MaterialButton extends Button {
       setPadding(internalPadding, 0, internalPadding, 0);
       setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.abc_text_size_button_material));
     }
-    setTextColor(Color.BLACK);
+    if (attrs != null) {
+      final TypedArray styleValues = context.obtainStyledAttributes(attrs, new int[]{android.R.attr.textColor});
+      setTextColor(styleValues.getColor(0, Color.BLACK));
+      styleValues.recycle();
+    } else {
+      setTextColor(Color.BLACK);
+    }
     setAllCaps(true);
     setBackgroundColor(Color.TRANSPARENT);
   }
@@ -81,7 +88,7 @@ public class MaterialButton extends Button {
 
   @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
     super.onSizeChanged(w, h, oldw, oldh);
-    bgRect.set(getLeft(), getTop(), getRight(), getBottom());
+    bgRect.set(0, 0, w, h);
     bgRect.inset(externalPadding, (touchTarget - height) / 2);
   }
 

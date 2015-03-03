@@ -24,12 +24,12 @@ public final class ColorFadeDrawable extends Drawable {
     paint.setColor(colorFrom);
   }
 
-  public ColorFadeDrawable fadeIn(final long duration) {
+  public ColorFadeDrawable fadeFrom(final long duration) {
     fade(duration, false);
     return this;
   }
 
-  public ColorFadeDrawable fadeOut(final long duration) {
+  public ColorFadeDrawable fadeTo(final long duration) {
     fade(duration, true);
     return this;
   }
