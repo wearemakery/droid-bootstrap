@@ -16,10 +16,12 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 public class CircularImageView extends View implements Target {
+  private boolean isAttached;
   private float radius;
   private RectF rect;
+  private RectF rectIcon;
   private Paint paint;
-
+  private Bitmap iconBitmap;
 
   public CircularImageView(final Context context) {
     super(context);
@@ -40,13 +42,38 @@ public class CircularImageView extends View implements Target {
     paint.setColor(color);
   }
 
+  public void setIcon(final Bitmap bitmap) {
+    if (iconBitmap != bitmap) {
+      iconBitmap = bitmap;
+      centerIcon();
+    }
+    if (isAttached) {
+      invalidate();
+    }
+  }
+
   public void reset() {
+    iconBitmap = null;
     paint.setShader(null);
-    invalidate();
+    if (isAttached) {
+      invalidate();
+    }
+  }
+
+  public void reset(final Bitmap bitmap) {
+    if (iconBitmap != bitmap) {
+      iconBitmap = bitmap;
+      centerIcon();
+    }
+    paint.setShader(null);
+    if (isAttached) {
+      invalidate();
+    }
   }
 
   private void init() {
     rect = new RectF();
+    rectIcon = new RectF();
     paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     paint.setColor(Color.TRANSPARENT);
   }
@@ -54,11 +81,25 @@ public class CircularImageView extends View implements Target {
   @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
     super.onSizeChanged(w, h, oldw, oldh);
     rect.set(0.0f, 0.0f, w, h);
+    centerIcon();
     radius = Math.min(w, h) / 2.0f;
   }
 
   @Override protected void onDraw(final Canvas canvas) {
     canvas.drawCircle(rect.centerX(), rect.centerY(), radius, paint);
+    if (iconBitmap != null) {
+      canvas.drawBitmap(iconBitmap, rectIcon.left, rectIcon.top, null);
+    }
+  }
+
+  @Override protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    isAttached = true;
+  }
+
+  @Override protected void onDetachedFromWindow() {
+    isAttached = false;
+    super.onDetachedFromWindow();
   }
 
   @Override public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
@@ -71,5 +112,12 @@ public class CircularImageView extends View implements Target {
 
   @Override public void onPrepareLoad(final Drawable placeHolderDrawable) {
     reset();
+  }
+
+  private void centerIcon() {
+    if (iconBitmap != null) {
+      rectIcon.set(rect);
+      rectIcon.inset((rect.width() - iconBitmap.getWidth()) / 2, (rect.height() - iconBitmap.getHeight()) / 2);
+    }
   }
 }

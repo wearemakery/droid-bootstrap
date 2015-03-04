@@ -58,17 +58,25 @@ public final class MaterialImageView extends View implements Target {
     paint = new Paint(Paint.ANTI_ALIAS_FLAG);
   }
 
+  public void setBitmap(final Bitmap bitmap) {
+    this.bitmap = bitmap;
+  }
+
   @Override protected void onDraw(final Canvas canvas) {
-    if (bitmap != null) {
-      canvas.drawBitmap(bitmap, 0.f, 0.f, paint);
-    } else if (getBackground() != null) {
+    if (getBackground() != null) {
       getBackground().draw(canvas);
+    }
+    if (bitmap != null) {
+      canvas.drawBitmap(bitmap, rect.left, rect.top, paint);
     }
   }
 
   @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
     super.onSizeChanged(w, h, oldw, oldh);
-    rect.set(0.0f, 0.0f, w, h);
+    rect.set(0f, 0f, w, h);
+    if (bitmap != null) {
+      rect.inset((rect.width() - bitmap.getWidth()) / 2, (rect.height() - bitmap.getHeight()) / 2);
+    }
   }
 
   @Override public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
@@ -83,15 +91,15 @@ public final class MaterialImageView extends View implements Target {
     final ColorMatrix saturationMatrix = new ColorMatrix();
     final ColorMatrix resultMatrix = new ColorMatrix();
 
-    animator = ValueAnimator.ofFloat(0.0f, 4.0f);
+    animator = ValueAnimator.ofFloat(0f, 4f);
     animator.setInterpolator(new DecelerateInterpolator(1.5f));
     animator.setDuration(3000l);
     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
       @Override public void onAnimationUpdate(final ValueAnimator animation) {
         final float value = (float) animation.getAnimatedValue();
-        final float alpha = Math.min(value, 2.0f) / 2.0f; // dt = 2, v = [0.0, 1.0]
-        final float contrast = Math.min(value, 3.0f) / 3.0f - 1.0f; // dt = 3, v = [-1.0, 0.0]
-        final float saturation = value / 4.0f - 1.0f; // dt = 4, v = [-1.0, 0.0]
+        final float alpha = Math.min(value, 2f) / 2f; // dt = 2, v = [0.0, 1.0]
+        final float contrast = Math.min(value, 3f) / 3f - 1f; // dt = 3, v = [-1.0, 0.0]
+        final float saturation = value / 4f - 1f; // dt = 4, v = [-1.0, 0.0]
         ColorUtils.alpha(alpha, contrastMatrix);
         ColorUtils.contrast(contrast, contrastMatrix);
         ColorUtils.saturation(saturation, saturationMatrix);
