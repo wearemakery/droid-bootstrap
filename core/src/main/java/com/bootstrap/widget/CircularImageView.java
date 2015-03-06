@@ -22,6 +22,7 @@ public class CircularImageView extends View implements Target {
   private RectF rectIcon;
   private Paint paint;
   private Bitmap iconBitmap;
+  private Runnable action;
 
   public CircularImageView(final Context context) {
     super(context);
@@ -71,6 +72,10 @@ public class CircularImageView extends View implements Target {
     }
   }
 
+  public void setLoadedAction(final Runnable action) {
+    this.action = action;
+  }
+
   private void init() {
     rect = new RectF();
     rectIcon = new RectF();
@@ -103,8 +108,13 @@ public class CircularImageView extends View implements Target {
   }
 
   @Override public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+    iconBitmap = null;
     paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
     invalidate();
+    if (action != null) {
+      action.run();
+      action = null;
+    }
   }
 
   @Override public void onBitmapFailed(final Drawable errorDrawable) {
