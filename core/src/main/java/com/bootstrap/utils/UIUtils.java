@@ -10,7 +10,6 @@ import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 
 public final class UIUtils {
-
   public static Drawable getRippleBackground(final int backgroundInactive, final int backgroundPressed) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       final ColorStateList backgroundColorStateList = new ColorStateList(new int[][]{new int[]{android.R.attr.state_pressed},}, new int[]{backgroundPressed});

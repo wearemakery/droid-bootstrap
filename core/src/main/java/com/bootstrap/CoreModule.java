@@ -9,8 +9,8 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FlatButton;
 import android.widget.Font;
 import android.widget.MaterialButton;
@@ -50,10 +50,6 @@ public final class CoreModule {
     return context.getResources().getDisplayMetrics();
   }
 
-  @Provides @Singleton public LayoutInflater provideInfalter(final Context context) {
-    return LayoutInflater.from(context);
-  }
-
   @Provides @Singleton public WindowManager provideWindowManager(final Context context) {
     return (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
   }
@@ -84,5 +80,9 @@ public final class CoreModule {
 
   @Provides @Singleton @Font("medium") public Typeface provideMediumFont() {
     return Typeface.createFromAsset(application.getAssets(), "Roboto-Medium.ttf");
+  }
+
+  @Provides @Singleton public InputMethodManager provideInputMethodManager() {
+    return (InputMethodManager) application.getSystemService(Context.INPUT_METHOD_SERVICE);
   }
 }
