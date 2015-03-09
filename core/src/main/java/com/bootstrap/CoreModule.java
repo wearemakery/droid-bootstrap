@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FlatButton;
 import android.widget.Font;
 import android.widget.MaterialButton;
+import android.widget.MaterialCheckBox;
 import android.widget.TypefaceEditText;
 import android.widget.TypefaceTextView;
 
@@ -25,10 +26,11 @@ import de.greenrobot.event.EventBus;
 
 @Module(library = true,
   injects = {
-    TypefaceTextView.class,
-    TypefaceEditText.class,
-    MaterialButton.class,
     FlatButton.class,
+    MaterialButton.class,
+    MaterialCheckBox.class,
+    TypefaceEditText.class,
+    TypefaceTextView.class
   }
 )
 public final class CoreModule {
