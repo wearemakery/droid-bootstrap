@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 
 import com.bootstrap.BaseApplication;
 import com.bootstrap.R;
@@ -79,6 +80,12 @@ public class MaterialButton extends Button {
     }
     setAllCaps(true);
     setBackgroundColor(Color.TRANSPARENT);
+
+    ViewGroup.LayoutParams lp = getLayoutParams();
+    if (lp == null) {
+      lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+      setLayoutParams(lp);
+    }
   }
 
   @Override protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
