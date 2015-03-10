@@ -7,13 +7,15 @@ import android.util.StateSet;
 
 import com.bootstrap.BaseApplication;
 import com.bootstrap.R;
+import com.bootstrap.drawable.TintedBitmapDrawable;
 
 import javax.inject.Inject;
 
 public class MaterialCheckBox extends CheckBox {
 
-  public static final int MODE_RECTANGLULAR = 0;
-  public static final int MODE_ROUND = 1;
+  public static final int MODE_RECTANGLULAR_OUTLINE = 0;
+  public static final int MODE_RECTANGLULAR_FILLED = 1;
+  public static final int MODE_ROUND_OUTLINE = 2;
 
   @Inject TypefaceManager typefaceManager;
 
@@ -41,15 +43,40 @@ public class MaterialCheckBox extends CheckBox {
     if (!isInEditMode()) {
       BaseApplication.from(context).inject(this);
       typefaceManager.setup(context, attrs, this);
-      setButtonStyle(MODE_RECTANGLULAR);
+      setButtonStyle(MODE_RECTANGLULAR_OUTLINE);
     }
   }
 
-  public final void setButtonStyle(final int mode) {
+  public final void setButtonStyle(final int mode, final int tint) {
     final StateListDrawable stateListDrawable = new StateListDrawable();
-    stateListDrawable.addState(new int[]{android.R.attr.state_checked}, getResources().getDrawable(mode == MODE_RECTANGLULAR ? R.drawable.ic_check_box_grey600_24dp : R.drawable.ic_check_round_grey600_24dp));
-    stateListDrawable.addState(StateSet.WILD_CARD, getResources().getDrawable(mode == MODE_RECTANGLULAR ? R.drawable.ic_check_box_outline_blank_grey600_24dp : R.drawable.ic_check_round_outline_blank_grey600_24dp));
+
+    int resourceChecked, resourceWildCard;
+    switch (mode) {
+      case MODE_RECTANGLULAR_FILLED:
+        resourceChecked = R.drawable.ic_check_box_filled_on;
+        resourceWildCard = R.drawable.ic_check_box_filled_off;
+        break;
+      case MODE_ROUND_OUTLINE:
+        resourceChecked = R.drawable.ic_check_round_filled_on;
+        resourceWildCard = R.drawable.ic_check_round_filled_off;
+        break;
+      default:
+        resourceChecked = R.drawable.ic_check_box_outline_on;
+        resourceWildCard = R.drawable.ic_check_box_outline_off;
+        break;
+    }
+    if (tint == -1) {
+      stateListDrawable.addState(new int[]{android.R.attr.state_checked}, getResources().getDrawable(resourceChecked));
+      stateListDrawable.addState(StateSet.WILD_CARD, getResources().getDrawable(resourceWildCard));
+    } else {
+      stateListDrawable.addState(new int[]{android.R.attr.state_checked}, new TintedBitmapDrawable(getResources(),resourceChecked, tint));
+      stateListDrawable.addState(StateSet.WILD_CARD, new TintedBitmapDrawable(getResources(),resourceWildCard, tint));
+    }
     setButtonDrawable(stateListDrawable);
+  }
+
+  public final void setButtonStyle(final int mode){
+    setButtonStyle(mode, -1);
   }
 
 }
