@@ -39,6 +39,12 @@ public final class ColorFadeDrawable extends Drawable {
     return this;
   }
 
+  public ColorFadeDrawable toggle(final long duration) {
+    if (paint.getColor() == colorFrom) fadeTo(duration);
+    else fadeFrom(duration);
+    return this;
+  }
+
   private void fade(final long duration, final boolean exit) {
     final ValueAnimator animator = ValueAnimator.ofInt(0);
     animator.setDuration(duration);

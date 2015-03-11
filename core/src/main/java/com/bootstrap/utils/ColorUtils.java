@@ -341,4 +341,13 @@ public final class ColorUtils {
     });
     // @formatter:on
   }
+
+  public static int get100(final int color){
+    return ColorUtils.compositeColors(0xb2ffffff, color) | 0xFF000000;
+  }
+
+  public static int get700(final int color){
+    return ColorUtils.compositeColors(0x32000000, color) | 0xFF000000;
+  }
+
 }

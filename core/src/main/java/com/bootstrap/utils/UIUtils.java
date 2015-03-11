@@ -1,6 +1,8 @@
 package com.bootstrap.utils;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
@@ -8,6 +10,8 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 public final class UIUtils {
   public static Drawable getRippleBackground(final int backgroundInactive, final int backgroundPressed) {
@@ -24,5 +28,14 @@ public final class UIUtils {
 
   public static ColorStateList getTextColor(final int textInactive, final int textPressed) {
     return new ColorStateList(new int[][]{new int[]{android.R.attr.state_pressed}, new int[]{}}, new int[]{textPressed, textInactive});
+  }
+
+  public static int getActionBarHeight(final Context context){
+    int actionBarHeight = 0;
+    final TypedValue tv = new TypedValue();
+    if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+      actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+    }
+    return actionBarHeight;
   }
 }
