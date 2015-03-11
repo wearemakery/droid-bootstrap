@@ -11,7 +11,6 @@ import com.bootstrap.utils.UIUtils;
 import javax.inject.Inject;
 
 public final class FlatButton extends TextView {
-
   @Inject TypefaceManager typefaceManager;
 
   private static final int FONT_SIZE = 14;
@@ -46,8 +45,9 @@ public final class FlatButton extends TextView {
     }
   }
 
+  @SuppressWarnings("deprecation")
   public void setColors(final int textInactive, final int textPressed, final int backgroundInactive, final int backgroundPressed) {
     setTextColor(UIUtils.getTextColor(textInactive, textPressed));
-    setBackground(UIUtils.getRippleBackground(backgroundInactive, backgroundPressed));
+    setBackgroundDrawable(UIUtils.getRippleBackground(backgroundInactive, backgroundPressed));
   }
 }

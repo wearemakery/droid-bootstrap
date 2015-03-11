@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.TypedValue;
 
 public final class AndroidUtils {
   private AndroidUtils() {
@@ -54,5 +55,13 @@ public final class AndroidUtils {
       final String enabledNotificationListeners = Settings.Secure.getString(context.getContentResolver(), "enabled_notification_listeners");
       return (!TextUtils.isEmpty(enabledNotificationListeners) && enabledNotificationListeners.contains(context.getPackageName()));
     }
+  }
+
+  public static int actionBarHeight(final Context context) {
+    final TypedValue tv = new TypedValue();
+    if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+      return TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+    }
+    return 0;
   }
 }
