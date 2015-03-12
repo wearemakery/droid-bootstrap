@@ -1,12 +1,17 @@
 package com.bootstrap.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.TypedValue;
+
+import java.util.List;
 
 public final class AndroidUtils {
   private AndroidUtils() {
@@ -63,5 +68,16 @@ public final class AndroidUtils {
       return TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
     }
     return 0;
+  }
+
+  public static String getEnvironmentInfo(final Context context) {
+    String info = Build.MANUFACTURER + " " + Build.MODEL + ", API level " + Build.VERSION.SDK_INT;
+    try {
+      final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+      info += ", version " + packageInfo.versionName + "(" + packageInfo.versionCode + ")";
+    } catch (final Exception e) {
+      // ignore
+    }
+    return info;
   }
 }
