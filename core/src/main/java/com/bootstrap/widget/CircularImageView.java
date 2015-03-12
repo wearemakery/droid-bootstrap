@@ -1,5 +1,6 @@
 package com.bootstrap.widget;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.bootstrap.animation.AbstractAnimatorListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -83,7 +85,7 @@ public class CircularImageView extends View implements Target {
     this.action = action;
   }
 
-  public void spin(final boolean reverse) {
+  public void spin(final boolean reverse, final Runnable endAction) {
     final ValueAnimator animator = ValueAnimator.ofFloat(reverse ? 360f : 0f, reverse ? 0f : 360f);
     animator.setDuration(250l);
     animator.setInterpolator(reverse ? new AccelerateInterpolator() : new DecelerateInterpolator());
@@ -91,6 +93,13 @@ public class CircularImageView extends View implements Target {
       @Override public void onAnimationUpdate(final ValueAnimator animation) {
         angle = (float) animation.getAnimatedValue();
         ViewCompat.postInvalidateOnAnimation(CircularImageView.this);
+      }
+    });
+    animator.addListener(new AbstractAnimatorListener() {
+      @Override public void onAnimationEnd(final Animator animation) {
+        if (endAction != null) {
+          endAction.run();
+        }
       }
     });
     animator.start();
