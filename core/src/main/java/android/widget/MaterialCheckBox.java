@@ -2,8 +2,10 @@ package android.widget;
 
 import android.content.Context;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.StateSet;
+import android.util.TypedValue;
 
 import com.bootstrap.BaseApplication;
 import com.bootstrap.R;
@@ -44,6 +46,9 @@ public class MaterialCheckBox extends CheckBox {
       BaseApplication.from(context).inject(this);
       typefaceManager.setup(context, attrs, this);
       setButtonStyle(MODE_RECTANGLULAR_OUTLINE);
+
+      if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN)
+        setPadding((int) (getPaddingLeft() + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, getContext().getResources().getDisplayMetrics())), getPaddingTop(), getPaddingRight(), getPaddingBottom());
     }
   }
 
@@ -69,13 +74,13 @@ public class MaterialCheckBox extends CheckBox {
       stateListDrawable.addState(new int[]{android.R.attr.state_checked}, getResources().getDrawable(resourceChecked));
       stateListDrawable.addState(StateSet.WILD_CARD, getResources().getDrawable(resourceWildCard));
     } else {
-      stateListDrawable.addState(new int[]{android.R.attr.state_checked}, new TintedBitmapDrawable(getResources(),resourceChecked, tint));
-      stateListDrawable.addState(StateSet.WILD_CARD, new TintedBitmapDrawable(getResources(),resourceWildCard, tint));
+      stateListDrawable.addState(new int[]{android.R.attr.state_checked}, new TintedBitmapDrawable(getResources(), resourceChecked, tint));
+      stateListDrawable.addState(StateSet.WILD_CARD, new TintedBitmapDrawable(getResources(), resourceWildCard, tint));
     }
     setButtonDrawable(stateListDrawable);
   }
 
-  public final void setButtonStyle(final int mode){
+  public final void setButtonStyle(final int mode) {
     setButtonStyle(mode, -1);
   }
 
