@@ -63,9 +63,6 @@ public final class MaterialImageView extends View implements Target {
   }
 
   @Override protected void onDraw(final Canvas canvas) {
-    if (getBackground() != null) {
-      getBackground().draw(canvas);
-    }
     if (bitmap != null) {
       canvas.drawBitmap(bitmap, rect.left, rect.top, paint);
     }
