@@ -24,8 +24,6 @@ public final class AnalyticsService {
     final GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
     analytics.setLocalDispatchPeriod(300);
     analytics.getLogger().setLogLevel(isDebug ? Logger.LogLevel.VERBOSE : Logger.LogLevel.ERROR);
-    // TODO
-    analytics.setDryRun(true);
     tracker = analytics.newTracker(R.xml.ga_config);
     tracker.enableAdvertisingIdCollection(true);
   }
