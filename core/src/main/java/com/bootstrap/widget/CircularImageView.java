@@ -149,6 +149,7 @@ public class CircularImageView extends View implements Target {
 
   @Override public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
     iconBitmap = null;
+    paint.setColor(Color.WHITE);
     paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
     invalidate();
     if (action != null) {
