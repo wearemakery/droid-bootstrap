@@ -64,10 +64,6 @@ public final class CoreModule {
     return PreferenceManager.getDefaultSharedPreferences(context);
   }
 
-  @Provides @Singleton public SharedPreferences.Editor provideSharedPreferencesEditor(final SharedPreferences preferences) {
-    return preferences.edit();
-  }
-
   @Provides @Singleton public Handler provideHandler() {
     return new Handler();
   }
