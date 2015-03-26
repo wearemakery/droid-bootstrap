@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
   compileSdkVersion 22
-  buildToolsVersion '22'
+  buildToolsVersion '22.0.1'
 
   defaultConfig {
     minSdkVersion 14
@@ -20,8 +20,8 @@ dependencies {
   provided('com.squareup.dagger:dagger-compiler:1.2.2') {
     exclude group: 'com.google.guava'
   }
-  compile 'com.squareup.okhttp:okhttp:2.2.0'
-  compile 'com.squareup.picasso:picasso:2.5.0'
+  compile 'com.squareup.okhttp:okhttp:2.3.0'
+  compile 'com.squareup.picasso:picasso:2.5.2'
   compile 'com.jakewharton.timber:timber:2.7.1'
   compile 'com.jakewharton:butterknife:6.1.0'
   compile 'io.reactivex:rxandroid:0.24.0'
