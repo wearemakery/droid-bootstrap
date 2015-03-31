@@ -5,9 +5,9 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 
-import javax.inject.Inject;
-
 import com.bootstrap.BaseApplication;
+
+import javax.inject.Inject;
 
 public final class TypefaceTextView extends TextView {
   @Inject TypefaceManager typefaceManager;
@@ -37,5 +37,15 @@ public final class TypefaceTextView extends TextView {
       BaseApplication.from(context).inject(this);
       typefaceManager.setup(context, attrs, this);
     }
+  }
+
+  public TypefaceTextView setTypeface(final boolean medium) {
+    super.setTypeface(medium ? typefaceManager.getMedium() : typefaceManager.getRegular());
+    return this;
+  }
+
+  public TypefaceTextView setStyle(final int style) {
+    super.setTypeface(super.getTypeface(), style);
+    return this;
   }
 }
