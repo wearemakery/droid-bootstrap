@@ -15,11 +15,11 @@ public final class ThreadAwareTree extends Timber.DebugTree {
       return tag;
     }
     final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
-    if (stackTrace.length < 7) {
+    if (stackTrace.length < 6) {
       throw new IllegalStateException(
         "Synthetic stacktrace didn't have enough elements: are you using proguard?");
     }
-    tag = stackTrace[6].getClassName();
+    tag = stackTrace[5].getClassName();
     final Matcher matcher = ANONYMOUS_CLASS.matcher(tag);
     if (matcher.find()) {
       tag = matcher.replaceAll("");

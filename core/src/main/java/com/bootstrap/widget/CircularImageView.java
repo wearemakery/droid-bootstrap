@@ -119,6 +119,8 @@ public class CircularImageView extends View implements Target {
       final Rect drawablePadding = new Rect();
       background.getPadding(drawablePadding);
       rect.inset(drawablePadding.left, drawablePadding.top);
+      // TODO check padding
+      // Timber.i("### %s / %s", drawablePadding, rect);
     }
     centerIcon();
     radius = Math.min(rect.width(), rect.height()) / 2f;

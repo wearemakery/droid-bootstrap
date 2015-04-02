@@ -342,12 +342,19 @@ public final class ColorUtils {
     // @formatter:on
   }
 
-  public static int get100(final int color){
+  public static int get100(final int color) {
     return ColorUtils.compositeColors(0xb2ffffff, color) | 0xFF000000;
   }
 
-  public static int get700(final int color){
+  public static int get700(final int color) {
     return ColorUtils.compositeColors(0x32000000, color) | 0xFF000000;
   }
 
+  public static int alpha87(final int color) {
+    return Color.argb(222, Color.red(color), Color.green(color), Color.blue(color));
+  }
+
+  public static int alpha54(final int color) {
+    return Color.argb(56, Color.red(color), Color.green(color), Color.blue(color));
+  }
 }
