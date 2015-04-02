@@ -1,17 +1,13 @@
 package com.bootstrap.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.TypedValue;
-
-import java.util.List;
 
 public final class AndroidUtils {
   private AndroidUtils() {
@@ -37,6 +33,10 @@ public final class AndroidUtils {
 
   public static boolean gtLollipop() {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+  }
+
+  public static boolean ltJellyBean() {
+    return Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN;
   }
 
   private static int statusBarHeight(final Context context) {
