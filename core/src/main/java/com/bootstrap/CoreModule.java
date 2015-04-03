@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FlatButton;
 import android.widget.Font;
@@ -50,10 +49,6 @@ public final class CoreModule {
 
   @Provides @Singleton public DisplayMetrics provideDisplayMetrics(final Context context) {
     return context.getResources().getDisplayMetrics();
-  }
-
-  @Provides @Singleton public WindowManager provideWindowManager(final Context context) {
-    return (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
   }
 
   @Provides @Singleton public NotificationManagerCompat provideNotificationManager(final Context context) {
