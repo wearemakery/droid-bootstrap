@@ -27,4 +27,12 @@
   <color name="grey">#9E9E9E</color>
   <color name="blue_grey">#607D8B</color>
 
+  <!-- material 800 -->
+  <color name="blue_grey_800">#37474F</color>
+  <color name="blue_light_800">#00838F</color>
+  <color name="deep_purple_800">#4527A0</color>
+  <color name="pink_800">#AD1457</color>
+  <color name="green_800">#2E7D32</color>
+  <color name="deep_orange_800">#D84315</color>
+
 </resources>
