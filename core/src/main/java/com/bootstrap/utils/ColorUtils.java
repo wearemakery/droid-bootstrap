@@ -347,7 +347,7 @@ public final class ColorUtils {
   }
 
   public static int get50(final int color) {
-    return ColorUtils.compositeColors(0x58ffffff, color) | 0xFF000000;
+    return ColorUtils.compositeColors(0xe1ffffff, color) | 0xFF000000;
   }
 
   public static int get700(final int color) {
