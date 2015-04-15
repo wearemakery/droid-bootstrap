@@ -3,4 +3,9 @@
   <declare-styleable name="RippleView">
     <attr name="bgColor" format="color"/>
   </declare-styleable>
+
+  <declare-styleable name="ExpandableCardView">
+    <attr name="target" format="reference"/>
+    <attr name="expanded" format="boolean"/>
+  </declare-styleable>
 </resources>

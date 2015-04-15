@@ -14,8 +14,11 @@ import android.widget.FlatButton;
 import android.widget.Font;
 import android.widget.MaterialButton;
 import android.widget.MaterialCheckBox;
+import android.widget.MaterialEditText;
 import android.widget.TypefaceEditText;
 import android.widget.TypefaceTextView;
+
+import com.bootstrap.dialog.MaterialAlertDialog;
 
 import javax.inject.Singleton;
 
@@ -29,7 +32,9 @@ import de.greenrobot.event.EventBus;
     MaterialButton.class,
     MaterialCheckBox.class,
     TypefaceEditText.class,
-    TypefaceTextView.class
+    TypefaceTextView.class,
+    MaterialAlertDialog.class,
+    MaterialEditText.class,
   }
 )
 public final class CoreModule {

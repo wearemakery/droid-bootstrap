@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:card_view="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:ignore="HardcodedText,RtlHardcoded">
+
+  <FrameLayout
+    android:id="@+id/fl_alert_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3c000000"/>
+
+  <android.support.v7.widget.CardView
+    android:id="@+id/cv_alert"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="16dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+      android:id="@+id/ll_alert"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <android.widget.TypefaceTextView
+        android:id="@+id/tv_alert_title"
+        style="@style/Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp"/>
+
+      <android.widget.TypefaceTextView
+        android:id="@+id/tv_alert_message"
+        style="@style/Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="16dp"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <android.widget.MaterialButton
+          android:id="@+id/b_alert_ok"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="OK"
+          android:textColor="@color/blue"/>
+      </LinearLayout>
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
+</FrameLayout>
+
