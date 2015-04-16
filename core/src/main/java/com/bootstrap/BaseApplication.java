@@ -16,6 +16,10 @@ public abstract class BaseApplication extends Application {
     objectGraph.inject(target);
   }
 
+  public <T> T get(final Class<T> clazz) {
+    return objectGraph.get(clazz);
+  }
+
   @Override public void onCreate() {
     super.onCreate();
     objectGraph = ObjectGraph.create(new CoreModule(this)).plus(getModule());
