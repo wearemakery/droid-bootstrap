@@ -60,34 +60,6 @@ public final class AndroidUtils {
     return (gtKitKat()) ? statusBarHeight(context) : 0;
   }
 
-  public static boolean isNotificationAccessGranted(final Context context) {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-      return false;
-    } else {
-      final String enabledNotificationListeners = Settings.Secure.getString(context.getContentResolver(), "enabled_notification_listeners");
-      return (!TextUtils.isEmpty(enabledNotificationListeners) && enabledNotificationListeners.contains(context.getPackageName()));
-    }
-  }
-
-  public static int actionBarHeight(final Context context) {
-    final TypedValue tv = new TypedValue();
-    if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-      return TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
-    }
-    return 0;
-  }
-
-  public static String getEnvironmentInfo(final Context context) {
-    String info = Build.MANUFACTURER + " " + Build.MODEL + ", API level " + Build.VERSION.SDK_INT;
-    try {
-      final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-      info += ", version " + packageInfo.versionName + "(" + packageInfo.versionCode + ")";
-    } catch (final Exception e) {
-      // ignore
-    }
-    return info;
-  }
-
   public static int navBarCorrection(final Context context) {
     return AndroidUtils.deviceHasNavBar(context) ? AndroidUtils.navigationBarHeight(context) : 0;
   }
@@ -106,6 +78,44 @@ public final class AndroidUtils {
       }
     }
     return hasNavBar;
+  }
+
+  public static int actionBarHeight(final Context context) {
+    final TypedValue tv = new TypedValue();
+    if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+      return TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+    }
+    return 0;
+  }
+
+  public static boolean isNotificationAccessGranted(final Context context) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+      return false;
+    } else {
+      final String enabledNotificationListeners = Settings.Secure.getString(context.getContentResolver(), "enabled_notification_listeners");
+      return (!TextUtils.isEmpty(enabledNotificationListeners) && enabledNotificationListeners.contains(context.getPackageName()));
+    }
+  }
+
+  public static int getBuildVersion(final Context context) {
+    try {
+      final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+      return packageInfo.versionCode;
+    } catch (final Exception e) {
+      // ignore
+    }
+    return 0;
+  }
+
+  public static String getEnvironmentInfo(final Context context) {
+    String info = Build.MANUFACTURER + " " + Build.MODEL + ", API level " + Build.VERSION.SDK_INT;
+    try {
+      final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+      info += ", version " + packageInfo.versionName + "(" + packageInfo.versionCode + ")";
+    } catch (final Exception e) {
+      // ignore
+    }
+    return info;
   }
 
   private static int navigationBarHeight(final Context context) {
