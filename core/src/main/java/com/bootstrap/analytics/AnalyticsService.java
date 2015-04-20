@@ -39,4 +39,8 @@ public final class AnalyticsService {
   public TimingTracker timing() {
     return TimingTracker.from(tracker);
   }
+
+  public Tracker getTracker() {
+    return tracker;
+  }
 }
