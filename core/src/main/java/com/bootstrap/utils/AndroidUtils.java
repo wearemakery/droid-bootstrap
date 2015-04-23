@@ -97,7 +97,7 @@ public final class AndroidUtils {
     }
   }
 
-  public static int getBuildVersion(final Context context) {
+  public static int getVersionCode(final Context context) {
     try {
       final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
       return packageInfo.versionCode;
@@ -105,6 +105,16 @@ public final class AndroidUtils {
       // ignore
     }
     return 0;
+  }
+
+  public static String getVersionName(final Context context) {
+    try {
+      final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+      return packageInfo.versionName;
+    } catch (final Exception e) {
+      // ignore
+    }
+    return "";
   }
 
   public static String getEnvironmentInfo(final Context context) {
