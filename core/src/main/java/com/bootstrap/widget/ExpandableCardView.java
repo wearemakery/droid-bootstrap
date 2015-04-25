@@ -6,9 +6,11 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 
 import com.bootstrap.R;
@@ -17,6 +19,8 @@ public class ExpandableCardView extends CardView {
   private boolean expanded, animating;
   private int targetId;
   private View target;
+  private RecyclerView recyclerView;
+  private StateChangedListener stateChangedListener;
 
   public ExpandableCardView(final Context context) {
     super(context);
@@ -33,20 +37,45 @@ public class ExpandableCardView extends CardView {
     init(context, attrs);
   }
 
-  public void expand() {
+  public void expand(final boolean withAnimation) {
     if (animating || expanded) {
       return;
     }
     expanded = true;
-    animateExpanding();
+    if (withAnimation) {
+      animateExpanding();
+    } else {
+      final ViewGroup.LayoutParams layoutParams = target.getLayoutParams();
+      layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+      target.setLayoutParams(layoutParams);
+      target.setVisibility(View.VISIBLE);
+    }
+    if (stateChangedListener != null) {
+      stateChangedListener.onStateChanged(this, true);
+    }
   }
 
-  public void collapse() {
+  public void collapse(final boolean withAnimation) {
     if (animating || !expanded) {
       return;
     }
     expanded = false;
-    animateCollapsing();
+    if (withAnimation) {
+      animateCollapsing();
+    } else {
+      target.setVisibility(View.GONE);
+    }
+    if (stateChangedListener != null) {
+      stateChangedListener.onStateChanged(this, false);
+    }
+  }
+
+  public void setTargetId(final int targetId) {
+    this.targetId = targetId;
+  }
+
+  public void setStateChangedListener(final StateChangedListener stateChangedListener) {
+    this.stateChangedListener = stateChangedListener;
   }
 
   private void init(final Context context, final AttributeSet attrs) {
@@ -59,15 +88,15 @@ public class ExpandableCardView extends CardView {
     setOnClickListener(new OnClickListener() {
       @Override public void onClick(final View view) {
         if (expanded) {
-          collapse();
+          collapse(true);
         } else {
-          expand();
+          expand(true);
         }
       }
     });
   }
 
-  public static ValueAnimator createHeightAnimator(final View view, final int start, final int end) {
+  private static ValueAnimator createHeightAnimator(final View view, final int start, final int end) {
     final ValueAnimator animator = ValueAnimator.ofInt(start, end);
     animator.setInterpolator(new DecelerateInterpolator());
     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -81,7 +110,7 @@ public class ExpandableCardView extends CardView {
     return animator;
   }
 
-  public void animateExpanding() {
+  private void animateExpanding() {
     target.setVisibility(View.VISIBLE);
     final View parent = (View) target.getParent();
     final int widthSpec = View.MeasureSpec.makeMeasureSpec(
@@ -99,13 +128,31 @@ public class ExpandableCardView extends CardView {
         animating = false;
       }
     });
+
+    if (recyclerView != null) {
+      final int recyclerViewHeight = recyclerView.getHeight();
+      final int recyclerViewBottomPadding = recyclerView.getPaddingBottom();
+      animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        @Override public void onAnimationUpdate(final ValueAnimator animation) {
+          if (recyclerView.getLayoutManager().canScrollVertically()) {
+            final int bottom = getBottom();
+            if (bottom > recyclerViewHeight) {
+              final int top = getTop();
+              if (top > 0) {
+                recyclerView.smoothScrollBy(0, Math.min(bottom - recyclerViewHeight + recyclerViewBottomPadding + 4, top));
+              }
+            }
+          }
+        }
+      });
+    }
+
     animator.start();
   }
 
-  public void animateCollapsing() {
-    final int origHeight = target.getHeight();
-
-    final ValueAnimator animator = createHeightAnimator(target, origHeight, 0);
+  private void animateCollapsing() {
+    final int originalHeight = target.getHeight();
+    final ValueAnimator animator = createHeightAnimator(target, originalHeight, 0);
     animator.addListener(new AnimatorListenerAdapter() {
       @Override public void onAnimationStart(final Animator animation) {
         animating = true;
@@ -123,5 +170,21 @@ public class ExpandableCardView extends CardView {
     super.onFinishInflate();
     target = findViewById(targetId);
     target.setVisibility(expanded ? View.VISIBLE : View.GONE);
+    post(new Runnable() {
+      @Override public void run() {
+        ViewParent parent;
+        do {
+          parent = getParent();
+          if (parent instanceof RecyclerView) {
+            recyclerView = (RecyclerView) parent;
+            break;
+          }
+        } while (parent == null);
+      }
+    });
+  }
+
+  public interface StateChangedListener {
+    void onStateChanged(final View view, final boolean expanded);
   }
 }
