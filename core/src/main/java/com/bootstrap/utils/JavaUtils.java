@@ -9,7 +9,7 @@ public final class JavaUtils {
   private JavaUtils() {
   }
 
-  public static void safeCloseCloseable(final Closeable closeable) {
+  public static void safeClose(final Closeable closeable) {
     if (closeable != null) {
       try {
         closeable.close();
@@ -25,7 +25,7 @@ public final class JavaUtils {
     } catch (Exception e) {
       throw new RuntimeException(e);
     } finally {
-      safeCloseCloseable(in);
+      safeClose(in);
     }
   }
 }

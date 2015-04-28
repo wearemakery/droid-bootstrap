@@ -2,7 +2,9 @@ package com.bootstrap.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Point;
@@ -14,6 +16,9 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
 
+import java.util.List;
+
+@SuppressLint("NewApi")
 public final class AndroidUtils {
   private static Boolean hasNavBar;
 
@@ -64,7 +69,6 @@ public final class AndroidUtils {
     return AndroidUtils.deviceHasNavBar(context) ? AndroidUtils.navigationBarHeight(context) : 0;
   }
 
-  @SuppressLint("NewApi")
   public static boolean deviceHasNavBar(final Context context) {
     if (hasNavBar == null) {
       if (AndroidUtils.gtKitKat()) {
@@ -126,6 +130,15 @@ public final class AndroidUtils {
       // ignore
     }
     return info;
+  }
+
+  public static boolean canResolveIntent(final Context context, final Intent intent) {
+    final List<ResolveInfo> info = context.getPackageManager().queryIntentActivities(intent, 0);
+    return info.size() > 0;
+  }
+
+  public static int dpToPx(final int dp, final DisplayMetrics displayMetrics) {
+    return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
   }
 
   private static int navigationBarHeight(final Context context) {
