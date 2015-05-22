@@ -10,8 +10,8 @@ public abstract class AbstractObserver<T> implements Observer<T> {
   @Override public void onCompleted() {
   }
 
-  @Override public void onError(final Throwable e) {
-    Timber.e(e, "");
+  @Override public void onError(final Throwable throwable) {
+    Timber.e(throwable, "");
   }
 
   @Override public void onNext(final T t) {

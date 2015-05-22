@@ -1,6 +1,7 @@
 package android.widget;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 
 public final class FlatButton extends TextView {
   @Inject TypefaceManager typefaceManager;
+  @Inject Handler handler;
 
   private static final int FONT_SIZE = 14;
 
@@ -37,7 +39,7 @@ public final class FlatButton extends TextView {
 
   private void init() {
     if (!isInEditMode()) {
-      BaseApplication.from(getContext()).inject(this);
+      BaseApplication.from(getContext()).getComponent().inject(this);
       setTypeface(typefaceManager.getMedium());
       setTextSize(TypedValue.COMPLEX_UNIT_SP, FONT_SIZE);
       setAllCaps(true);

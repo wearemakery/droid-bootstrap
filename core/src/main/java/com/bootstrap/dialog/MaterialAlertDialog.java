@@ -34,7 +34,7 @@ public final class MaterialAlertDialog extends DialogFragment {
 
   @Override public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    BaseApplication.from(getActivity()).inject(this);
+    BaseApplication.from(getActivity()).getComponent().inject(this);
 
     setStyle(DialogFragment.STYLE_NO_FRAME, 0);
 

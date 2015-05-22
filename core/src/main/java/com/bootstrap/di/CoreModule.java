@@ -1,4 +1,4 @@
-package com.bootstrap;
+package com.bootstrap.di;
 
 import android.app.Application;
 import android.content.Context;
@@ -11,15 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.DisplayMetrics;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FlatButton;
 import android.widget.Font;
-import android.widget.MaterialButton;
-import android.widget.MaterialCheckBox;
-import android.widget.MaterialEditText;
-import android.widget.TypefaceEditText;
-import android.widget.TypefaceTextView;
-
-import com.bootstrap.dialog.MaterialAlertDialog;
 
 import javax.inject.Singleton;
 
@@ -27,17 +19,7 @@ import dagger.Module;
 import dagger.Provides;
 import de.greenrobot.event.EventBus;
 
-@Module(library = true,
-  injects = {
-    FlatButton.class,
-    MaterialButton.class,
-    MaterialCheckBox.class,
-    TypefaceEditText.class,
-    TypefaceTextView.class,
-    MaterialAlertDialog.class,
-    MaterialEditText.class,
-  }
-)
+@Module
 public final class CoreModule {
   private final Application application;
 

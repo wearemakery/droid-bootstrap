@@ -32,7 +32,7 @@ public class TypefaceEditText extends EditText {
 
   private void init(final Context context, final AttributeSet attrs) {
     if (!isInEditMode()) {
-      BaseApplication.from(context).inject(this);
+      BaseApplication.from(context).getComponent().inject(this);
       typefaceManager.setup(context, attrs, this);
     }
   }

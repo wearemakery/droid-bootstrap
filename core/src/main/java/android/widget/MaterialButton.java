@@ -56,7 +56,7 @@ public class MaterialButton extends Button {
     bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     bgPaint.setColor(0xffcccccc);
     if (!isInEditMode()) {
-      BaseApplication.from(context).inject(this);
+      BaseApplication.from(context).getComponent().inject(this);
       setTypeface(typefaceManager.getMedium());
 
       final int minWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64.0f, displayMetrics);

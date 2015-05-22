@@ -3,27 +3,23 @@ package com.bootstrap;
 import android.app.Application;
 import android.content.Context;
 
-import dagger.ObjectGraph;
+import com.bootstrap.di.CoreComponent;
+import com.bootstrap.di.CoreModule;
+import com.bootstrap.di.DaggerCoreComponent;
 
 public abstract class BaseApplication extends Application {
-  protected ObjectGraph objectGraph;
+  protected CoreComponent coreComponent;
 
   public static BaseApplication from(final Context context) {
     return ((BaseApplication) context.getApplicationContext());
   }
 
-  public void inject(final Object target) {
-    objectGraph.inject(target);
-  }
-
-  public <T> T get(final Class<T> clazz) {
-    return objectGraph.get(clazz);
+  public CoreComponent getComponent() {
+    return coreComponent;
   }
 
   @Override public void onCreate() {
     super.onCreate();
-    objectGraph = ObjectGraph.create(new CoreModule(this)).plus(getModule());
+    coreComponent = DaggerCoreComponent.builder().coreModule(new CoreModule(this)).build();
   }
-
-  public abstract Object getModule();
 }
