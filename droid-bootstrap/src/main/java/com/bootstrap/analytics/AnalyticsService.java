@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.bootstrap.R;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 
 import javax.inject.Inject;
@@ -20,10 +19,9 @@ public final class AnalyticsService {
     this.context = context;
   }
 
-  public void init(final boolean isDebug) {
+  public void init() {
     final GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
     analytics.setLocalDispatchPeriod(300);
-    analytics.getLogger().setLogLevel(isDebug ? Logger.LogLevel.VERBOSE : Logger.LogLevel.ERROR);
     tracker = analytics.newTracker(R.xml.ga_config);
     tracker.enableAdvertisingIdCollection(true);
   }
