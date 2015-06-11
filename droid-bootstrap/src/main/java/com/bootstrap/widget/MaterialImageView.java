@@ -2,7 +2,6 @@ package com.bootstrap.widget;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,7 +10,6 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -42,12 +40,6 @@ public final class MaterialImageView extends View implements Target {
 
   public MaterialImageView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    init();
-  }
-
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public MaterialImageView(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
-    super(context, attrs, defStyleAttr, defStyleRes);
     init();
   }
 
@@ -93,7 +85,7 @@ public final class MaterialImageView extends View implements Target {
 
     animator = ValueAnimator.ofFloat(0f, 4f);
     animator.setInterpolator(new DecelerateInterpolator(1.5f));
-    animator.setDuration(3000l);
+    animator.setDuration(3000L);
     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
       @Override public void onAnimationUpdate(final ValueAnimator animation) {
         final float value = (float) animation.getAnimatedValue();
