@@ -33,14 +33,19 @@ public class MaterialEditText extends TypefaceEditText {
   }
 
   @SuppressWarnings("deprecation") private void init(final Context context, final AttributeSet attrs) {
-    final Resources resources = getResources();
-    final Drawable normal = new TintedNinePatchDrawable(resources, R.drawable.input_line, 0xddffffff);
-    final Drawable focused = new TintedNinePatchDrawable(resources, R.drawable.input_line_focused, Color.WHITE);
-    final StateListDrawable bgDrawable = new StateListDrawable();
-    bgDrawable.addState(new int[]{android.R.attr.state_focused}, focused);
-    bgDrawable.addState(new int[]{android.R.attr.state_enabled}, normal);
-    setBackgroundDrawable(bgDrawable);
+    setBackgroundColor(0xddffffff, Color.WHITE);
     setTextColor(Color.WHITE);
     setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
+  }
+
+  public MaterialEditText setBackgroundColor(final int normal, final int focused){
+    final Resources resources = getResources();
+    final Drawable normalDrawable = new TintedNinePatchDrawable(resources, R.drawable.input_line, normal);
+    final Drawable focusedDrawable = new TintedNinePatchDrawable(resources, R.drawable.input_line_focused, focused);
+    final StateListDrawable bgDrawable = new StateListDrawable();
+    bgDrawable.addState(new int[]{android.R.attr.state_focused}, focusedDrawable);
+    bgDrawable.addState(new int[]{android.R.attr.state_enabled}, normalDrawable);
+    setBackgroundDrawable(bgDrawable);
+    return this;
   }
 }
