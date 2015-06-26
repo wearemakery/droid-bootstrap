@@ -13,6 +13,22 @@ public final class TintedBitmapDrawable extends BitmapDrawable {
   private int tint;
   private int alpha;
 
+  public static TintedBitmapDrawable fromColor(final Resources res, final int resId, final int color) {
+    return new TintedBitmapDrawable(res, resId, color);
+  }
+
+  public static TintedBitmapDrawable fromColor(final Resources res, final Bitmap bitmap, final int color) {
+    return new TintedBitmapDrawable(res, bitmap, color);
+  }
+
+  public static TintedBitmapDrawable fromColorRes(final Resources res, final int resId, final int colorResId) {
+    return new TintedBitmapDrawable(res, resId, res.getColor(colorResId));
+  }
+
+  public static TintedBitmapDrawable fromColorRes(final Resources res, final Bitmap bitmap, final int colorResId) {
+    return new TintedBitmapDrawable(res, bitmap, res.getColor(colorResId));
+  }
+
   public TintedBitmapDrawable(final Resources res, final Bitmap bitmap, final int tint) {
     super(res, bitmap);
     this.tint = tint;

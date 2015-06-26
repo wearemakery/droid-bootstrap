@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import com.bootstrap.R;
 import com.bootstrap.drawable.TintedNinePatchDrawable;
 
+@SuppressWarnings("deprecation")
 public class MaterialEditText extends TypefaceEditText {
   public MaterialEditText(final Context context) {
     super(context);
@@ -32,13 +33,13 @@ public class MaterialEditText extends TypefaceEditText {
     init(context, attrs);
   }
 
-  @SuppressWarnings("deprecation") private void init(final Context context, final AttributeSet attrs) {
+  private void init(final Context context, final AttributeSet attrs) {
     setBackgroundColor(0xddffffff, Color.WHITE);
     setTextColor(Color.WHITE);
     setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
   }
 
-  public MaterialEditText setBackgroundColor(final int normal, final int focused){
+  public MaterialEditText setBackgroundColor(final int normal, final int focused) {
     final Resources resources = getResources();
     final Drawable normalDrawable = new TintedNinePatchDrawable(resources, R.drawable.input_line, normal);
     final Drawable focusedDrawable = new TintedNinePatchDrawable(resources, R.drawable.input_line_focused, focused);
