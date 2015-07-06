@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -19,6 +20,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.bootstrap.animation.AbstractAnimatorListener;
+import com.bootstrap.utils.BitmapUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -119,8 +121,6 @@ public class CircularImageView extends View implements Target {
       final Rect drawablePadding = new Rect();
       background.getPadding(drawablePadding);
       rect.inset(drawablePadding.left, drawablePadding.top);
-      // TODO check padding
-      // Timber.i("### %s / %s", drawablePadding, rect);
     }
     centerIcon();
     radius = Math.min(rect.width(), rect.height()) / 2f;
@@ -163,6 +163,18 @@ public class CircularImageView extends View implements Target {
   }
 
   @Override public void onBitmapFailed(final Drawable errorDrawable) {
+    iconBitmap = null;
+    if (errorDrawable == null) {
+      reset();
+    } else {
+      if (paint.getColor() == 0) {
+        paint.setColor(Color.WHITE);
+      }
+      final Bitmap source = ((BitmapDrawable) errorDrawable).getBitmap();
+      final Bitmap cropped = BitmapUtils.crop(source, (int) rect.width(), (int) rect.height(), 0.5f, 0.5f);
+      paint.setShader(new BitmapShader(cropped, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+      invalidate();
+    }
   }
 
   @Override public void onPrepareLoad(final Drawable placeHolderDrawable) {
