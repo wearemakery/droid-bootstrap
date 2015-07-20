@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.StateListDrawable;
 
 public final class TintedBitmapDrawable extends BitmapDrawable {
   private int tint;
@@ -27,6 +28,13 @@ public final class TintedBitmapDrawable extends BitmapDrawable {
 
   public static TintedBitmapDrawable fromColorRes(final Resources res, final Bitmap bitmap, final int colorResId) {
     return new TintedBitmapDrawable(res, bitmap, res.getColor(colorResId));
+  }
+
+  public static StateListDrawable fromEnabledDisabledState(final Resources res, final int resId, final int enabledColorResId, final int disabledColorResId) {
+    final StateListDrawable drawable = new StateListDrawable();
+    drawable.addState(new int[]{-android.R.attr.state_enabled}, fromColorRes(res, resId, disabledColorResId));
+    drawable.addState(new int[]{}, fromColorRes(res, resId, enabledColorResId));
+    return drawable;
   }
 
   public TintedBitmapDrawable(final Resources res, final Bitmap bitmap, final int tint) {
