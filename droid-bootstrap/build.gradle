@@ -10,7 +10,7 @@ buildscript {
 }
 
 group = 'co.mkry'
-version = '1.0.8'
+version = '1.0.10'
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
@@ -42,7 +42,7 @@ dependencies {
   compile 'com.jakewharton.timber:timber:3.1.0'
   compile 'com.jakewharton:butterknife:6.1.0'
   compile 'io.reactivex:rxandroid:0.25.0'
-  compile 'io.reactivex:rxjava:1.0.12'
+  compile 'io.reactivex:rxjava:1.0.13'
   compile 'de.greenrobot:eventbus:2.4.0'
   compile 'net.tribe7.seeds:seeds-primitives:16.0.1'
   compile 'net.tribe7.seeds:seeds-strings:16.0.1'
