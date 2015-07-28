@@ -37,6 +37,13 @@ public final class TintedBitmapDrawable extends BitmapDrawable {
     return drawable;
   }
 
+  public static StateListDrawable fromSelectedUnselectedState(final Resources res, final int resId, final int selectedColorResId, final int unSelectedColorResId) {
+    final StateListDrawable drawable = new StateListDrawable();
+    drawable.addState(new int[]{-android.R.attr.state_selected}, fromColorRes(res, resId, unSelectedColorResId));
+    drawable.addState(new int[]{}, fromColorRes(res, resId, selectedColorResId));
+    return drawable;
+  }
+
   public TintedBitmapDrawable(final Resources res, final Bitmap bitmap, final int tint) {
     super(res, bitmap);
     this.tint = tint;
