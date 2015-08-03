@@ -51,19 +51,21 @@ dependencies {
 def siteUrl = 'https://github.com/themakery/droid-bootstrap'
 def gitUrl = 'https://github.com/themakery/droid-bootstrap.git'
 
-bintray {
-  user = bintrayUser
-  key = bintrayApiKey
+if (hasProperty('bintrayUser')) {
+  bintray {
+    user = bintrayUser
+    key = bintrayApiKey
 
-  configurations = ['archives']
-  pkg {
-    repo = 'android'
-    name = project.name
-    desc = 'Droid Bootstrap'
-    websiteUrl = siteUrl
-    vcsUrl = gitUrl
-    licenses = ['Apache-2.0']
-    publicDownloadNumbers = true
+    configurations = ['archives']
+    pkg {
+      repo = 'android'
+      name = project.name
+      desc = 'Droid Bootstrap'
+      websiteUrl = siteUrl
+      vcsUrl = gitUrl
+      licenses = ['Apache-2.0']
+      publicDownloadNumbers = true
+    }
   }
 }
 
