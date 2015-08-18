@@ -1,45 +1,49 @@
-group = 'co.mkry'
-version = '1.0.0'
+group = "co.mkry"
+version = "1.0.2"
 
-apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: "com.android.library"
+apply plugin: "com.neenbedankt.android-apt"
+apply plugin: "com.github.dcendents.android-maven"
+apply plugin: "com.jfrog.bintray"
 
 android {
   compileSdkVersion 22
-  buildToolsVersion '22.0.1'
+  buildToolsVersion "23.0.0 rc3"
 
   defaultConfig {
-    minSdkVersion 14
+    minSdkVersion 15
     targetSdkVersion 22
   }
 }
 
-dependencies {
-  apt 'com.google.dagger:dagger-compiler:2.0.1'
-  compile project(':droid-bootstrap')
-  compile 'com.fasterxml.jackson.core:jackson-databind:2.5.4'
-  compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.4'
-  compile 'com.couchbase.lite:couchbase-lite-android:1.1.0'
+ext {
+  jacksonVersion = "2.6.1"
 }
 
-def siteUrl = 'https://github.com/themakery/droid-bootstrap'
-def gitUrl = 'https://github.com/themakery/droid-bootstrap.git'
+dependencies {
+  apt "com.google.dagger:dagger-compiler:${daggerVersion}"
+  compile project(":droid-bootstrap")
+  compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+  compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+  compile "com.couchbase.lite:couchbase-lite-android:1.1.0"
+}
 
-if (hasProperty('bintrayUser')) {
+def siteUrl = "https://github.com/themakery/droid-bootstrap"
+def gitUrl = "https://github.com/themakery/droid-bootstrap.git"
+
+if (hasProperty("bintrayUser")) {
   bintray {
     user = bintrayUser
     key = bintrayApiKey
 
-    configurations = ['archives']
+    configurations = ["archives"]
     pkg {
-      repo = 'android'
+      repo = "android"
       name = project.name
-      desc = 'Droid Storage'
+      desc = "Droid Storage"
       websiteUrl = siteUrl
       vcsUrl = gitUrl
-      licenses = ['Apache-2.0']
+      licenses = ["Apache-2.0"]
       publicDownloadNumbers = true
     }
   }
@@ -48,7 +52,7 @@ if (hasProperty('bintrayUser')) {
 install {
   repositories.mavenInstaller {
     pom.project {
-      packaging 'aar'
+      packaging "aar"
     }
   }
 }

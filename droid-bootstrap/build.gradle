@@ -1,58 +1,67 @@
-group = 'co.mkry'
-version = '1.0.10'
+group = "co.mkry"
+version = "1.0.12"
 
-apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: "com.android.library"
+apply plugin: "com.neenbedankt.android-apt"
+apply plugin: "com.github.dcendents.android-maven"
+apply plugin: "com.jfrog.bintray"
 
 android {
   compileSdkVersion 22
-  buildToolsVersion '22.0.1'
+  buildToolsVersion "23.0.0 rc3"
 
   defaultConfig {
-    minSdkVersion 14
+    minSdkVersion 15
     targetSdkVersion 22
   }
 }
 
-dependencies {
-  apt 'com.google.dagger:dagger-compiler:2.0.1'
-  compile 'com.google.dagger:dagger:2.0.1'
-  compile 'com.google.android.gms:play-services-base:7.5.0'
-  compile 'com.google.android.gms:play-services-analytics:7.5.0'
-  compile 'com.android.support:appcompat-v7:22.2.1'
-  compile 'com.android.support:design:22.2.1'
-  compile 'com.android.support:recyclerview-v7:22.2.1'
-  compile 'com.android.support:cardview-v7:22.2.1'
-  compile 'javax.annotation:javax.annotation-api:1.2'
-  compile 'com.squareup.okhttp:okhttp:2.4.0'
-  compile 'com.squareup.picasso:picasso:2.5.2'
-  compile 'com.jakewharton.timber:timber:3.1.0'
-  compile 'com.jakewharton:butterknife:6.1.0'
-  compile 'io.reactivex:rxandroid:0.25.0'
-  compile 'io.reactivex:rxjava:1.0.13'
-  compile 'de.greenrobot:eventbus:2.4.0'
-  compile 'net.tribe7.seeds:seeds-primitives:16.0.1'
-  compile 'net.tribe7.seeds:seeds-strings:16.0.1'
+ext {
+  supportLibVersion = "22.2.1"
+  playServicesVersion = "7.8.0"
+  rxlifecycleVersion = "0.1.0"
+  seedsVersion = "16.0.1"
 }
 
-def siteUrl = 'https://github.com/themakery/droid-bootstrap'
-def gitUrl = 'https://github.com/themakery/droid-bootstrap.git'
+dependencies {
+  apt "com.google.dagger:dagger-compiler:${daggerVersion}"
+  compile "com.google.dagger:dagger:${daggerVersion}"
+  compile "com.google.android.gms:play-services-base:${playServicesVersion}"
+  compile "com.google.android.gms:play-services-analytics:${playServicesVersion}"
+  compile "com.android.support:appcompat-v7:${supportLibVersion}"
+  compile "com.android.support:design:${supportLibVersion}"
+  compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+  compile "com.android.support:cardview-v7:${supportLibVersion}"
+  compile "net.tribe7.seeds:seeds-primitives:${seedsVersion}"
+  compile "net.tribe7.seeds:seeds-strings:${seedsVersion}"
+  compile "com.trello:rxlifecycle:${rxlifecycleVersion}"
+  compile "com.trello:rxlifecycle-components:${rxlifecycleVersion}"
+  compile "javax.annotation:javax.annotation-api:1.2"
+  compile "com.squareup.okhttp:okhttp:2.4.0"
+  compile "com.squareup.picasso:picasso:2.5.2"
+  compile "com.jakewharton.timber:timber:3.1.0"
+  compile "com.jakewharton:butterknife:7.0.1"
+  compile "io.reactivex:rxandroid:1.0.1"
+  compile "io.reactivex:rxjava:1.0.14"
+  compile "de.greenrobot:eventbus:2.4.0"
+}
 
-if (hasProperty('bintrayUser')) {
+def siteUrl = "https://github.com/themakery/droid-bootstrap"
+def gitUrl = "https://github.com/themakery/droid-bootstrap.git"
+
+if (hasProperty("bintrayUser")) {
   bintray {
     user = bintrayUser
     key = bintrayApiKey
 
-    configurations = ['archives']
+    configurations = ["archives"]
     pkg {
-      repo = 'android'
+      repo = "android"
       name = project.name
-      desc = 'Droid Bootstrap'
+      desc = "Droid Bootstrap"
       websiteUrl = siteUrl
       vcsUrl = gitUrl
-      licenses = ['Apache-2.0']
+      licenses = ["Apache-2.0"]
       publicDownloadNumbers = true
     }
   }
@@ -61,7 +70,7 @@ if (hasProperty('bintrayUser')) {
 install {
   repositories.mavenInstaller {
     pom.project {
-      packaging 'aar'
+      packaging "aar"
     }
   }
 }
