@@ -30,17 +30,24 @@ public final class TintedBitmapDrawable extends BitmapDrawable {
     return new TintedBitmapDrawable(res, bitmap, res.getColor(colorResId));
   }
 
-  public static StateListDrawable fromEnabledDisabledState(final Resources res, final int resId, final int enabledColorResId, final int disabledColorResId) {
+  public static StateListDrawable fromEnabledState(final Resources res, final int resId, final int enabledColorResId, final int disabledColorResId) {
     final StateListDrawable drawable = new StateListDrawable();
     drawable.addState(new int[]{-android.R.attr.state_enabled}, fromColorRes(res, resId, disabledColorResId));
     drawable.addState(new int[]{}, fromColorRes(res, resId, enabledColorResId));
     return drawable;
   }
 
-  public static StateListDrawable fromSelectedUnselectedState(final Resources res, final int resId, final int selectedColorResId, final int unSelectedColorResId) {
+  public static StateListDrawable fromSelectedState(final Resources res, final int resId, final int selectedColorResId, final int unSelectedColorResId) {
     final StateListDrawable drawable = new StateListDrawable();
     drawable.addState(new int[]{-android.R.attr.state_selected}, fromColorRes(res, resId, unSelectedColorResId));
     drawable.addState(new int[]{}, fromColorRes(res, resId, selectedColorResId));
+    return drawable;
+  }
+
+  public static StateListDrawable fromActivatedState(final Resources res, final int resId, final int activatedColorResId, final int deactivatedColorResId) {
+    final StateListDrawable drawable = new StateListDrawable();
+    drawable.addState(new int[]{android.R.attr.state_activated}, fromColorRes(res, resId, activatedColorResId));
+    drawable.addState(new int[]{}, fromColorRes(res, resId, deactivatedColorResId));
     return drawable;
   }
 

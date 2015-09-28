@@ -81,8 +81,8 @@ public class ExpandableCardView extends CardView {
   private void init(final Context context, final AttributeSet attrs) {
     if (attrs != null) {
       final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ExpandableCardView);
-      targetId = array.getResourceId(R.styleable.ExpandableCardView_target, 0);
-      expanded = array.getBoolean(R.styleable.ExpandableCardView_expanded, false);
+      targetId = array.getResourceId(R.styleable.ExpandableCardView_cardTarget, 0);
+      expanded = array.getBoolean(R.styleable.ExpandableCardView_cardExpanded, false);
       array.recycle();
     }
     setOnClickListener(new OnClickListener() {
