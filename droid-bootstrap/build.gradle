@@ -30,7 +30,7 @@ android {
 ext {
   daggerVersion = "2.0.2"
   supportLibVersion = "23.1.0"
-  playServicesVersion = "8.3.0"
+  playServicesVersion = "8.1.0"
   rxlifecycleVersion = "0.3.0"
   seedsVersion = "16.0.1"
 }
