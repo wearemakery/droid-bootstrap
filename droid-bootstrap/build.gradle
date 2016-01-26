@@ -1,5 +1,5 @@
 group = "co.mkry"
-version = "1.0.17"
+version = "1.0.18"
 
 buildscript {
   repositories {
@@ -30,8 +30,8 @@ android {
 ext {
   daggerVersion = "2.0.2"
   supportLibVersion = "23.1.1"
-  playServicesVersion = "8.3.0"
-  rxlifecycleVersion = "0.3.0"
+  playServicesVersion = "8.4.0"
+  rxlifecycleVersion = "0.4.0"
   seedsVersion = "16.0.1"
 }
 
@@ -49,12 +49,12 @@ dependencies {
   compile "com.trello:rxlifecycle:${rxlifecycleVersion}"
   compile "com.trello:rxlifecycle-components:${rxlifecycleVersion}"
   compile "javax.annotation:javax.annotation-api:1.2"
-  compile "com.squareup.okhttp:okhttp:2.6.0"
+  compile "com.squareup.okhttp3:okhttp:3.0.1"
   compile "com.squareup.picasso:picasso:2.5.2"
   compile "com.jakewharton.timber:timber:4.1.0"
   compile "com.jakewharton:butterknife:7.0.1"
-  compile "io.reactivex:rxandroid:1.0.1"
-  compile "io.reactivex:rxjava:1.0.16"
+  compile "io.reactivex:rxandroid:1.1.0"
+  compile "io.reactivex:rxjava:1.1.0"
   compile "de.greenrobot:eventbus:2.4.0"
 }
 
