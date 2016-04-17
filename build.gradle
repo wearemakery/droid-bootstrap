@@ -3,7 +3,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath "com.android.tools.build:gradle:2.0.0-alpha7"
+    classpath "com.android.tools.build:gradle:2.1.0-beta1"
   }
 }
 
@@ -14,5 +14,5 @@ allprojects {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = "2.10"
+  gradleVersion = "2.12"
 }

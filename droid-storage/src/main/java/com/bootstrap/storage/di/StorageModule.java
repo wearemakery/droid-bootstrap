@@ -29,6 +29,7 @@ public final class StorageModule {
 
   @Provides @AppScope public Database provideDatabase(final Manager manager) {
     try {
+      manager.setStorageType(Manager.SQLITE_STORAGE);
       return manager.getDatabase("app-db");
     } catch (CouchbaseLiteException e) {
       throw new RuntimeException(e);
