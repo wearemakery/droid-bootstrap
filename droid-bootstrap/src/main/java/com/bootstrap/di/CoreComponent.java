@@ -20,10 +20,11 @@ import android.widget.TypefaceTextView;
 import com.bootstrap.analytics.AnalyticsService;
 import com.bootstrap.dialog.MaterialAlertDialog;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
-import de.greenrobot.event.EventBus;
 
 @Singleton
 @Component(modules = {

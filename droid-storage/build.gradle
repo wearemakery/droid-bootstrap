@@ -1,5 +1,5 @@
 group = "co.mkry"
-version = "1.1.0"
+version = "1.2.0"
 
 buildscript {
   repositories {
@@ -28,8 +28,8 @@ android {
 }
 
 ext {
-  daggerVersion = "2.2"
-  jacksonVersion = "2.7.3"
+  daggerVersion = "2.4"
+  jacksonVersion = "2.7.4"
 }
 
 dependencies {
@@ -37,7 +37,7 @@ dependencies {
   compile project(":droid-bootstrap")
   compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
   compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-  compile "com.couchbase.lite:couchbase-lite-android:1.2.0"
+  compile "com.couchbase.lite:couchbase-lite-android:1.2.1"
 }
 
 def siteUrl = "https://github.com/themakery/droid-bootstrap"

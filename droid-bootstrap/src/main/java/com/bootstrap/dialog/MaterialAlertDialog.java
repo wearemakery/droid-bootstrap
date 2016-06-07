@@ -18,9 +18,10 @@ import com.bootstrap.R;
 import com.bootstrap.event.AlertConfirmedEvent;
 import com.bootstrap.view.TouchStealListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
-import de.greenrobot.event.EventBus;
 
 public final class MaterialAlertDialog extends DialogFragment {
   private final static String EXTRA_TITLE = "Title";
