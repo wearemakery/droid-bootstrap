@@ -1,36 +1,38 @@
-group = "co.mkry"
-version = "1.2.0"
-
 buildscript {
   repositories {
     jcenter()
   }
   dependencies {
     classpath "com.neenbedankt.gradle.plugins:android-apt:1.8"
-    classpath "com.github.dcendents:android-maven-gradle-plugin:1.3"
-    classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6"
+    classpath "com.github.dcendents:android-maven-gradle-plugin:1.4"
   }
 }
+
+plugins {
+  id "com.jfrog.bintray" version "1.5"
+}
+
+group = "co.mkry"
+version = "1.2.1"
 
 apply plugin: "com.android.library"
 apply plugin: "com.neenbedankt.android-apt"
 apply plugin: "com.github.dcendents.android-maven"
-apply plugin: "com.jfrog.bintray"
 
 android {
-  compileSdkVersion 23
-  buildToolsVersion "24.0.0 rc1"
+  compileSdkVersion 24
+  buildToolsVersion "24.0.0"
 
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 23
+    targetSdkVersion 24
   }
 }
 
 ext {
-  daggerVersion = "2.4"
-  supportLibVersion = "23.4.0"
-  playServicesVersion = "9.0.2"
+  daggerVersion = "2.5"
+  supportLibVersion = "24.0.0"
+  playServicesVersion = "9.2.0"
   rxlifecycleVersion = "0.6.1"
   seedsVersion = "16.0.1"
 }
@@ -52,9 +54,9 @@ dependencies {
   compile "com.squareup.okhttp3:okhttp:3.3.1"
   compile "com.squareup.picasso:picasso:2.5.2"
   compile "com.jakewharton.timber:timber:4.1.2"
-  compile "com.jakewharton:butterknife:8.0.1"
-  compile "io.reactivex:rxandroid:1.2.0"
-  compile "io.reactivex:rxjava:1.1.5"
+  compile "com.jakewharton:butterknife:8.1.0"
+  compile "io.reactivex:rxandroid:1.2.1"
+  compile "io.reactivex:rxjava:1.1.6"
   compile "org.greenrobot:eventbus:3.0.0"
 }
 
